@@ -1,4 +1,4 @@
-export ZSH=/Users/McGroarty/.oh-my-zsh
+export ZSH="$HOME/.oh-my-zsh"
 export PATH="/Users/McGroarty/.local/bin:$PATH"
 export python2="/usr/bin/python"
 

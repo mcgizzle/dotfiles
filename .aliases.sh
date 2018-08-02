@@ -43,11 +43,6 @@ function sw () {
    "!!:gs/$1/$2/"
 }
 #-----------------------------------------------------------------
-# FYP Stack ----------------------------------------------------------
-alias stacknet='/Users/McGroarty/College/FYP/stack-network/.stack-work/install/x86_64-osx/lts-9.14/8.0.2/bin/stack-network'
-alias mstack='/Users/McGroarty/College/FYP/stack/.stack-work/install/x86_64-osx/lts-9.14/8.0.2/bin/stack'
-alias mdstack='/Users/McGroarty/College/FYP/stack/.stack-work/install/x86_64-linux-dkda49f7ca9b244180d3cfb1987cbc9743/lts-9.14/8.0.2/bin/stack'
-alias mdworker='/Users/McGroarty/College/FYP/stack/.stack-work/install/x86_64-linux-dkda49f7ca9b244180d3cfb1987cbc9743/lts-9.14/8.0.2/bin/worker'
 # Google ---------------------------------------------------------
 function gsearch () {
   echo "Searching The Google"
