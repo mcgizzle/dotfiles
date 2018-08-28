@@ -1,7 +1,7 @@
 syntax on
+
 filetype plugin indent on
 
-set nocompatible
 set number
 set showmode
 set smartcase
@@ -11,58 +11,26 @@ set autoindent
 set expandtab
 set shiftwidth=2
 set softtabstop=2
-set laststatus=0
 
+if $VIM_CRONTAB == "true"
+  set nobackup
+  set nowritebackup
+endif
 execute pathogen#infect()
 
 call neomake#configure#automake('w')
-" Key Bindings
-" Intero Maps
-tnoremap <Esc> <C-\><C-n>
-" Lookup the type of expression under the cursor
-au FileType haskell nmap <silent> <leader>t <Plug>InteroGenericType
-au FileType haskell nmap <silent> <leader>T <Plug>InteroType
-" Insert type declaration
-au FileType haskell nnoremap <silent> <leader>nt :InteroTypeInsert<CR>
-" Show info about expression or type under the cursor
-au FileType haskell nnoremap <silent> <leader>ni :InteroInfo<CR>
 
-" Open/Close the Intero terminal window
-au FileType haskell nnoremap <silent> <leader>nn :InteroOpen<CR>
-au FileType haskell nnoremap <silent> <leader>nh :InteroHide<CR>
+let g:neomake_javascript_enabled_makers = ['eslint']
 
-" Reload the current file into REPL
-au FileType haskell nnoremap <silent> <leader>nf :InteroLoadCurrentFile<CR>
-" Jump to the definition of an identifier
-au FileType haskell nnoremap <silent> <leader>ng :InteroGoToDef<CR>
-" Evaluate an expression in REPL
-au FileType haskell nnoremap <silent> <leader>ne :InteroEval<CR>
+autocmd BufWritePre *.js Neoformat
 
-" Start/Stop Intero
-au FileType haskell nnoremap <silent> <leader>ns :InteroStart<CR>
-au FileType haskell nnoremap <silent> <leader>nk :InteroKill<CR>
 " NerdTree Ctrl-e
 map <C-e> :NERDTreeToggle<CR>
 
-" Deoplete
+map ff <S-g>
+
+let g:hindent_on_save = 1
 let g:deoplete#enable_at_startup = 1
-" Use smartcase.
-let g:deoplete#enable_smart_case = 1
-"let g:haskellmode_completion_ghc = 0
-let g:haskell_classic_highlighting = 1
-"let g:haskell_indent_disable = 1
 let NERDTreeShowHidden=1
 
-" Intero
-" Reload on start
-"au BufWritePost *.hs InteroReload
-
-" Haskell Config
-au BufNewFile,BufRead *.hs
-    \ set tabstop=2 |
-    \ set softtabstop=2 |
-    \ set expandtab |
-    \ set autoindent |
-    \ set nu 
-
-
+autocmd VimEnter * colorscheme evening1
