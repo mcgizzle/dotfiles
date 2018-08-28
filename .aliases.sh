@@ -1,7 +1,9 @@
+# Vim
+alias vim='nvim'
 # DOT Files ------------------------------------------------------
 alias dotcfg='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
-alias zshcfg='vim ~/.zshrc'
-alias aliascfg='vim ~/.aliases.sh'
+alias zshcfg='nvim ~/.zshrc'
+alias aliascfg='nvim ~/.aliases.sh'
 alias reload='source ~/.zshrc'
 # ----------------------------------------------------------------
 # General --------------------------------------------------------
@@ -12,6 +14,17 @@ alias scripts='cd ~/Scripts'
 alias hcm='cd ~/Projects/HCM'
 alias hcmf='cd ~/Projects/HCM/hcm-frontend'
 alias hcmb='cd ~/Projects/HCM/hcm-backend'
+
+vport () {
+  lsof -i tcp:"$1"
+}
+kpid () {
+  kill -9 "$1"
+}
+
+ignore (){
+  echo "$1" >> .gitignore
+}
 
 function cs(){
   cd $1;
