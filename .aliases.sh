@@ -6,17 +6,27 @@ alias zshcfg='nvim ~/.zshrc'
 alias aliascfg='nvim ~/.aliases.sh'
 alias reload='source ~/.zshrc'
 # ----------------------------------------------------------------
-# General --------------------------------------------------------
+# Scala ----------------------------------------------------------
+findscala () {
+  grep -r --include \*.scala $1 .
+}
+publish () {
+  echo "Compiling & publishing $1"
+  (cd "$HOME/code/orgvue-api/lib/$1" && sbt compile publishLocal)
+  echo "Done."
+}
+# GIT -----------------------------------------------------------
 alias g='git'
-alias coll='cd ~/College'
-alias proj='cd ~/Projects'
-alias scripts='cd ~/Scripts'
-alias hcm='cd ~/Projects/HCM'
-alias hcmf='cd ~/Projects/HCM/hcm-frontend'
-alias hcmb='cd ~/Projects/HCM/hcm-backend'
 
+patchBranch () {
+  git diff "$1" -- "$2" > temp.patch
+  git add -p temp.patch
+  rm -f temp.patch
+}
+
+# General -------------------------------------------------------
 vport () {
-  lsof -i tcp:"$1"
+  lsof -i :"$1"
 }
 kpid () {
   kill -9 "$1"
@@ -30,12 +40,6 @@ function cs(){
   cd $1;
   ls
 }
-
-function srhs () {
-  
-  sr $1 $2 $3 '*.hs'
-
-}  
 
 function sr () {
 
@@ -55,15 +59,20 @@ function sr () {
 function sw () {
    "!!:gs/$1/$2/"
 }
+# Postgres -------------------------------------------------------
+alias pgstart='pg_ctl -D /usr/local/var/postgres start'
+alias pgstop='pg_ctl -D /usr/local/var/postgres stop'
+#-----------------------------------------------------------------
+# InfluxDB -------------------------------------------------------
+alias ifdbstart='influxd -config /usr/local/etc/influxdb.conf'
 #-----------------------------------------------------------------
 # Google ---------------------------------------------------------
 function gsearch () {
   echo "Searching The Google"
   open http://google.com/search\?q\=$1
 }
-#----------------------------------------------------------------
-# Vim -----------------------------------------------------------
-alias pathon='cd ~/.vim/bundle'
+#-----------------------------------------------------------------
+# Vim ------------------------------------------------------------
 alias pathonv='cd ~/.config/nvim/bundle'
 function cfg(){
         if [ -z "$1" ]
@@ -80,10 +89,6 @@ function cfg(){
           echo "Options are: nvim/vim"
         fi
       }
-# ----------------------------------------------------------------
-# SSH ------------------------------------------------------------
-alias ssh-mcn='ssh mcgroas@macneill.scss.tcd.ie'
-#-----------------------------------------------------------------
 #-----------------------------------------------------------------
 # Docker  --------------------------------------------------------
 function docker-ip(){

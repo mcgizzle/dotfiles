@@ -1,8 +1,7 @@
 export ZSH="$HOME/.oh-my-zsh"
-export PATH="$HOME/.local/bin:$PATH"
-export PATH="$HOME/.stack/programs/x86_64-osx/ghc-8.2.2/bin:$PATH"
 export EDITOR=/usr/local/bin/nvim
 ZSH_THEME="spaceship"
+ZSH_DISABLE_COMPFIX=true
 
 plugins=(git)
 
@@ -11,6 +10,7 @@ source $ZSH/oh-my-zsh.sh
 source $HOME/.aliases.sh
 
 alias crontab="VIM_CRONTAB=true crontab"
+eval $(thefuck --alias)
 
 autoload -U add-zsh-hook
 load-local-conf() {
@@ -20,3 +20,5 @@ load-local-conf() {
      fi
 }
 add-zsh-hook chpwd load-local-conf
+
+eval $(thefuck --alias)

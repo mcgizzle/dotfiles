@@ -21,6 +21,8 @@ execute pathogen#infect()
 call neomake#configure#automake('w')
 
 let g:neomake_javascript_enabled_makers = ['eslint']
+let g:deoplete#enable_at_startup = 1
+let g:scala_scaladoc_indent = 1
 
 autocmd BufWritePre *.js Neoformat
 
@@ -33,4 +35,6 @@ let g:hindent_on_save = 1
 let g:deoplete#enable_at_startup = 1
 let NERDTreeShowHidden=1
 
-autocmd VimEnter * colorscheme evening1
+"autocmd VimEnter * colorscheme evening
+au FileType xml exe ":silent %!xmllint --format --recover - 2>/dev/null"
+
