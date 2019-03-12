@@ -1,3 +1,4 @@
+ORGVUE_API="$HOME/code/orgvue-api"
 # Vim
 alias vim='nvim'
 # DOT Files ------------------------------------------------------
@@ -12,11 +13,12 @@ findscala () {
 }
 publish () {
   echo "Compiling & publishing $1"
-  (cd "$HOME/code/orgvue-api/lib/$1" && sbt compile publishLocal)
+  (cd "$ORGVUE_API/lib/$1" && sbt compile publishLocal)
   echo "Done."
 }
 # GIT -----------------------------------------------------------
 alias g='git'
+alias gs='git status'
 
 patchBranch () {
   git diff "$1" -- "$2" > temp.patch
@@ -25,6 +27,18 @@ patchBranch () {
 }
 
 # General -------------------------------------------------------
+
+intelli () {
+  if [ -d "$ORGVUE_API/app/$1" ]; then
+    open -a IntelliJ\ IDEA\ CE "$ORGVUE_API/app/$1"
+  elif [ -d "$ORGVUE_API/lib/$1" ] 
+  then
+    open -a IntelliJ\ IDEA\ CE "$ORGVUE_API/lib/$1"
+  else
+    echo "OI! $1 was not found in libs or apps"
+  fi
+}
+
 vport () {
   lsof -i :"$1"
 }
