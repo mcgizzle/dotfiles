@@ -27,14 +27,23 @@ patchBranch () {
 }
 
 # General -------------------------------------------------------
+alias orgvue='cd /Users/sean.mcgroarty/code/orgvue-api'
+alias crontab="VIM_CRONTAB=true crontab"
 
 intelli () {
-  if [ -d "$ORGVUE_API/app/$1" ]; then
+  if [ -z "$1" ]; then
+    echo "specify a lib or app u dope"
+  elif [[ "$1" == "." ]]; 
+  then
+    open -a IntelliJ\ IDEA\ CE .
+  elif [ -d "$ORGVUE_API/app/$1" ];
+  then
     open -a IntelliJ\ IDEA\ CE "$ORGVUE_API/app/$1"
-  elif [ -d "$ORGVUE_API/lib/$1" ] 
+  elif [ -d "$ORGVUE_API/lib/$1" ];
   then
     open -a IntelliJ\ IDEA\ CE "$ORGVUE_API/lib/$1"
   else
+    open -a IntelliJ\ IDEA\ CE "$ORGVUE_API/lib/$1"
     echo "OI! $1 was not found in libs or apps"
   fi
 }
@@ -74,8 +83,9 @@ function sw () {
    "!!:gs/$1/$2/"
 }
 # Postgres -------------------------------------------------------
-alias pgstart='pg_ctl -D /usr/local/var/postgres start'
+alias pgstart='sudo su smcgroarty-admin -c "pg_ctl -D /usr/local/var/postgres start"'
 alias pgstop='pg_ctl -D /usr/local/var/postgres stop'
+alias pgcount="psql -U postgres --dbname=OrgVue -Atc 'SELECT count(*) FROM pg_stat_activity'"
 #-----------------------------------------------------------------
 # InfluxDB -------------------------------------------------------
 alias ifdbstart='influxd -config /usr/local/etc/influxdb.conf'
