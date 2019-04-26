@@ -19,6 +19,7 @@ publish () {
 # GIT -----------------------------------------------------------
 alias g='git'
 alias gs='git status'
+alias me='git symbolic-ref --short -q HEAD'
 
 patchBranch () {
   git diff "$1" -- "$2" > temp.patch

@@ -24,6 +24,10 @@ add-zsh-hook chpwd load-local-conf
 load-local-conf
 eval $(thefuck --alias)
 
+#Source AWS keys
+
+source $HOME/.aws/orgvue-creds
+
 lookAway () {
   while true; do
     osascript -e 'display notification "Look away from the screen!!" with title "Hello there" sound name "hero"'
