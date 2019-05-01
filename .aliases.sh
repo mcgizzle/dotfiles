@@ -1,6 +1,4 @@
-ORGVUE_API="$HOME/code/orgvue-api"
-# Vim
-alias vim='nvim'
+export ORGVUE_API="$HOME/code/orgvue-api"
 
 ##################################################################
 # DOT Files                                                      #
@@ -14,6 +12,7 @@ alias reload='source ~/.zshrc'
 ##################################################################
 # Scala                                                          #
 ##################################################################
+
 findscala () {
   grep -r --include \*.scala $1 .
 }
@@ -95,21 +94,24 @@ function sr () {
   done
 }  
 
-# Postgres -------------------------------------------------------
-alias pgstart='pg_ctl -D /usr/local/var/postgres start'
-alias pgstop='pg_ctl -D /usr/local/var/postgres stop'
-alias pgcount="psql -U postgres --dbname=OrgVue -Atc 'SELECT count(*) FROM pg_stat_activity'"
-#-----------------------------------------------------------------
-# InfluxDB -------------------------------------------------------
-alias ifdbstart='influxd -config /usr/local/etc/influxdb.conf'
-#-----------------------------------------------------------------
-# Google ---------------------------------------------------------
 function gsearch () {
   echo "Searching The Google"
   open http://google.com/search\?q\=$1
 }
-#-----------------------------------------------------------------
-# Vim ------------------------------------------------------------
+
+##################################################################
+# Postgres                                                       #
+##################################################################
+
+alias pgstart='pg_ctl -D /usr/local/var/postgres start'
+alias pgstop='pg_ctl -D /usr/local/var/postgres stop'
+alias pgcount="psql -U postgres --dbname=OrgVue -Atc 'SELECT count(*) FROM pg_stat_activity'"
+
+##################################################################
+# Vim                                                            #
+##################################################################
+
+alias vim='nvim'
 alias pathonv='cd ~/.config/nvim/bundle'
 function cfg(){
         if [ -z "$1" ]
@@ -126,9 +128,18 @@ function cfg(){
           echo "Options are: nvim/vim"
         fi
       }
-#-----------------------------------------------------------------
-# Docker  --------------------------------------------------------
+
+##################################################################
+# Docker                                                         #
+##################################################################
+
 function docker-ip(){
   docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' "$1"
 }
-#-----------------------------------------------------------------
+
+##################################################################
+# InfluxDB                                                       #
+##################################################################
+
+alias ifdbstart='influxd -config /usr/local/etc/influxdb.conf'
+
