@@ -1,13 +1,19 @@
 ORGVUE_API="$HOME/code/orgvue-api"
 # Vim
 alias vim='nvim'
-# DOT Files ------------------------------------------------------
+
+##################################################################
+# DOT Files                                                      #
+##################################################################
+
 alias dotcfg='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 alias zshcfg='nvim ~/.zshrc'
 alias aliascfg='nvim ~/.aliases.sh'
 alias reload='source ~/.zshrc'
-# ----------------------------------------------------------------
-# Scala ----------------------------------------------------------
+
+##################################################################
+# Scala                                                          #
+##################################################################
 findscala () {
   grep -r --include \*.scala $1 .
 }
@@ -16,10 +22,15 @@ publish () {
   (cd "$ORGVUE_API/lib/$1" && sbt compile publishLocal)
   echo "Done."
 }
-# GIT -----------------------------------------------------------
+compdef '_files -W "$ORGVUE_API/lib"' publish  
+
+##################################################################
+# Git Config                                                     #
+##################################################################
+
 alias g='git'
 alias gs='git status'
-alias me='git symbolic-ref --short -q HEAD'
+alias gpu='git push -u origin "$(git symbolic-ref --short HEAD)"'
 
 patchBranch () {
   git diff "$1" -- "$2" > temp.patch
@@ -27,7 +38,10 @@ patchBranch () {
   rm -f temp.patch
 }
 
-# General -------------------------------------------------------
+##################################################################
+# General                                                        #
+##################################################################
+
 alias orgvue='cd /Users/sean.mcgroarty/code/orgvue-api'
 alias crontab="VIM_CRONTAB=true crontab"
 
@@ -48,6 +62,7 @@ intelli () {
     echo "OI! $1 was not found in libs or apps"
   fi
 }
+compdef '_files -W "$ORGVUE_API/lib" "ORGVUE_API/app"' intelli  
 
 vport () {
   lsof -i :"$1"
@@ -80,11 +95,8 @@ function sr () {
   done
 }  
 
-function sw () {
-   "!!:gs/$1/$2/"
-}
 # Postgres -------------------------------------------------------
-alias pgstart='sudo su smcgroarty-admin -c "pg_ctl -D /usr/local/var/postgres start"'
+alias pgstart='pg_ctl -D /usr/local/var/postgres start'
 alias pgstop='pg_ctl -D /usr/local/var/postgres stop'
 alias pgcount="psql -U postgres --dbname=OrgVue -Atc 'SELECT count(*) FROM pg_stat_activity'"
 #-----------------------------------------------------------------
