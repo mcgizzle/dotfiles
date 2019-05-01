@@ -1,5 +1,9 @@
 export ZSH="$HOME/.oh-my-zsh"
 export EDITOR=/usr/local/bin/nvim
+export SPACESHIP_CHAR_SYMBOL="λ "
+
+setopt HIST_IGNORE_ALL_DUPS
+
 ZSH_THEME="spaceship"
 ZSH_DISABLE_COMPFIX=true
 
@@ -7,9 +11,12 @@ plugins=(git)
 
 # STARTUP COMMANDS
 source $ZSH/oh-my-zsh.sh
-source $HOME/.aliases.sh
-
 # Source .aliases.sh on startup
+source $HOME/.aliases.sh
+#Source AWS keys
+source $HOME/.aws/orgvue-creds
+
+eval $(thefuck --alias)
 
 # Load .aliases.sh on cd into directory
 autoload -U add-zsh-hook
@@ -20,13 +27,7 @@ load-local-conf() {
      fi
 }
 add-zsh-hook chpwd load-local-conf
-
 load-local-conf
-eval $(thefuck --alias)
-
-#Source AWS keys
-
-source $HOME/.aws/orgvue-creds
 
 lookAway () {
   while true; do
@@ -34,6 +35,4 @@ lookAway () {
     sleep 1200 
   done & 
 }
-
-#lookAway
 
