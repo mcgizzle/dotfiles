@@ -16,6 +16,7 @@ alias reload='source ~/.zshrc'
 findscala () {
   grep -r --include \*.scala $1 .
 }
+
 publish () {
   echo "Compiling & publishing $1"
   (cd "$ORGVUE_API/lib/$1" && sbt compile publishLocal)
@@ -23,15 +24,29 @@ publish () {
 }
 compdef '_files -W "$ORGVUE_API/lib"' publish  
 
+ci () {
+  (cd "$ORGVUE_API/lib/$1" && sbt $(cat SBT-CI))
+}
+compdef '_files -W "$ORGVUE_API/lib"' publish  
+
 ##################################################################
 # Git Config                                                     #
 ##################################################################
 
-alias g='git'
+#alias g='git'
 alias gs='git status'
+alias gfo='git fetch origin'
 alias gpu='git push -u origin "$(git symbolic-ref --short HEAD)"'
 
-patchBranch () {
+function  gpl () {
+  git pull origin $1
+}
+
+function gco () {
+  git checkout "$1"
+}
+
+function patchBranch () {
   git diff "$1" -- "$2" > temp.patch
   git add -p temp.patch
   rm -f temp.patch
@@ -57,7 +72,6 @@ intelli () {
   then
     open -a IntelliJ\ IDEA\ CE "$ORGVUE_API/lib/$1"
   else
-    open -a IntelliJ\ IDEA\ CE "$ORGVUE_API/lib/$1"
     echo "OI! $1 was not found in libs or apps"
   fi
 }

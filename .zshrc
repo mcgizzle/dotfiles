@@ -7,7 +7,7 @@ setopt HIST_IGNORE_ALL_DUPS
 ZSH_THEME="spaceship"
 ZSH_DISABLE_COMPFIX=true
 
-plugins=(git)
+plugins=(git zsh-syntax-highlighting)
 
 # STARTUP COMMANDS
 source $ZSH/oh-my-zsh.sh
