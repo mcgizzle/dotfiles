@@ -1,9 +1,6 @@
-export ZSH="$HOME/.oh-my-zsh"
-export EDITOR=/usr/local/bin/nvim
-export SPACESHIP_CHAR_SYMBOL="λ "
-
 setopt HIST_IGNORE_ALL_DUPS
 
+export SPACESHIP_CHAR_SYMBOL="λ "
 ZSH_THEME="spaceship"
 ZSH_DISABLE_COMPFIX=true
 
@@ -11,12 +8,10 @@ plugins=(git zsh-syntax-highlighting)
 
 # STARTUP COMMANDS
 source $ZSH/oh-my-zsh.sh
-# Source .aliases.sh on startup
 source $HOME/.aliases.sh
-#Source AWS keys
-source $HOME/.aws/orgvue-creds
 
 eval $(thefuck --alias)
+eval "$(direnv hook zsh)"
 
 # Load .aliases.sh on cd into directory
 autoload -U add-zsh-hook

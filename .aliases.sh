@@ -1,5 +1,3 @@
-export ORGVUE_API="$HOME/code/orgvue-api"
-
 ##################################################################
 # DOT Files                                                      #
 ##################################################################
@@ -27,13 +25,11 @@ compdef '_files -W "$ORGVUE_API/lib"' publish
 ci () {
   (cd "$ORGVUE_API/lib/$1" && sbt $(cat SBT-CI))
 }
-compdef '_files -W "$ORGVUE_API/lib"' publish  
 
 ##################################################################
 # Git Config                                                     #
 ##################################################################
 
-#alias g='git'
 alias gs='git status'
 alias gfo='git fetch origin'
 alias gpu='git push -u origin "$(git symbolic-ref --short HEAD)"'
@@ -146,6 +142,14 @@ function cfg(){
 ##################################################################
 # Docker                                                         #
 ##################################################################
+
+function publishHttp4d() {
+  echo "hello"
+  x=$(read -s -p "Password: " pass)
+  echo "$x"
+  docker run -it --entrypoint=/bin/bash -e ARTIFACTORY_PASS="$pass" -v ~/code/http4s-directives:/home/app/vsts -v ~/code/orgvue-api-docker/orgvue-dev-ubuntu/sbt/credentials.hush:/home/app/.ivy2/.credentials orgvueapidevelop.azurecr.io/orgvue-dev-ubuntu-sbt:0.3.8 -c "cd /home/app/vsts/ && sed -i -e s/***/$ARTIFACTORY_PASS/ && sbt -Dsbt.boot.credentials=/home/app/.ivy2/.credentials -Dsbt.override.build.repos=true -Dsbt.repository.config=/home/app/.sbt/repositories test publish"
+
+}
 
 function docker-ip(){
   docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' "$1"
