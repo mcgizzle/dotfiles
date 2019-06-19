@@ -10,22 +10,20 @@ alias reload='source ~/.zshrc'
 alias vpn='networksetup -connectpppoeservice "Concentra VPN"'
 
 ##################################################################
+# HCM                                                            #
+##################################################################
+
+alias hcm='cd $HOME/code/hcm'
+alias hcmb='cd $HOME/code/hcm/hcm-backend'
+alias hcma='cd $HOME/code/hcm/hcm-admin'
+alias hcmf='cd $HOME/code/hcm/hcm/hcm-frontend'
+
+##################################################################
 # Scala                                                          #
 ##################################################################
 
 findscala () {
   grep -r --include \*.scala $1 .
-}
-
-publish () {
-  echo "Compiling & publishing $1"
-  (cd "$ORGVUE_API/lib/$1" && sbt compile publishLocal)
-  echo "Done."
-}
-compdef '_files -W "$ORGVUE_API/lib"' publish  
-
-ci () {
-  (cd "$ORGVUE_API/lib/$1" && sbt $(cat SBT-CI))
 }
 
 ##################################################################
@@ -44,44 +42,16 @@ function gco () {
   git checkout "$1"
 }
 
-function gitClean () {
-  git branch | xargs git branch -d 
-}
-
-function patchBranch () {
-  git diff "$1" -- "$2" > temp.patch
-  git add -p temp.patch
-  rm -f temp.patch
-}
-
 ##################################################################
 # General                                                        #
 ##################################################################
 
-alias orgvue='cd /Users/sean.mcgroarty/code/orgvue-api'
 alias crontab="VIM_CRONTAB=true crontab"
-
-intelli () {
-  if [ -z "$1" ]; then
-    echo "specify a lib or app u dope"
-  elif [[ "$1" == "." ]]; 
-  then
-    open -a IntelliJ\ IDEA\ CE .
-  elif [ -d "$ORGVUE_API/app/$1" ];
-  then
-    open -a IntelliJ\ IDEA\ CE "$ORGVUE_API/app/$1"
-  elif [ -d "$ORGVUE_API/lib/$1" ];
-  then
-    open -a IntelliJ\ IDEA\ CE "$ORGVUE_API/lib/$1"
-  else
-    echo "OI! $1 was not found in libs or apps"
-  fi
-}
-compdef '_files -W "$ORGVUE_API/lib" "ORGVUE_API/app"' intelli  
 
 vport () {
   lsof -i :"$1"
 }
+
 kpid () {
   kill -9 "$1"
 }
@@ -148,14 +118,6 @@ function cfg(){
 ##################################################################
 # Docker                                                         #
 ##################################################################
-
-function publishHttp4d() {
-  echo "hello"
-  x=$(read -s -p "Password: " pass)
-  echo "$x"
-  docker run -it --entrypoint=/bin/bash -e ARTIFACTORY_PASS="$pass" -v ~/code/http4s-directives:/home/app/vsts -v ~/code/orgvue-api-docker/orgvue-dev-ubuntu/sbt/credentials.hush:/home/app/.ivy2/.credentials orgvueapidevelop.azurecr.io/orgvue-dev-ubuntu-sbt:0.3.8 -c "cd /home/app/vsts/ && sed -i -e s/***/$ARTIFACTORY_PASS/ && sbt -Dsbt.boot.credentials=/home/app/.ivy2/.credentials -Dsbt.override.build.repos=true -Dsbt.repository.config=/home/app/.sbt/repositories test publish"
-
-}
 
 function docker-ip(){
   docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' "$1"
