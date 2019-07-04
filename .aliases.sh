@@ -7,6 +7,8 @@ alias zshcfg='nvim ~/.zshrc'
 alias aliascfg='nvim ~/.aliases.sh'
 alias reload='source ~/.zshrc'
 
+alias vpn='networksetup -connectpppoeservice "Concentra VPN"'
+
 ##################################################################
 # Scala                                                          #
 ##################################################################
@@ -40,6 +42,10 @@ function  gpl () {
 
 function gco () {
   git checkout "$1"
+}
+
+function gitClean () {
+  git branch | xargs git branch -d 
 }
 
 function patchBranch () {
