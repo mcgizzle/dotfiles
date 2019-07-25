@@ -11,20 +11,26 @@ alias reload='source ~/.zshrc'
 alias vpn='networksetup -connectpppoeservice "Concentra VPN"'
 
 ##################################################################
-# HCM                                                            #
-##################################################################
-
-alias hcm='cd $HOME/code/hcm'
-alias hcmb='cd $HOME/code/hcm/hcm-backend'
-alias hcma='cd $HOME/code/hcm/hcm-admin'
-alias hcmf='cd $HOME/code/hcm/hcm/hcm-frontend'
-
-##################################################################
 # Scala                                                          #
 ##################################################################
 
 findscala () {
   grep -r --include \*.scala $1 .
+}
+
+publish () {
+  echo "Compiling & publishing $1"
+  (cd "$ORGVUE_API/lib/$1" && sbt compile publishLocal)
+  echo "Done."
+}
+compdef '_files -W "$ORGVUE_API/lib"' publish  
+
+ci () {
+  (cd "$ORGVUE_API/lib/$1" && sbt $(cat SBT-CI))
+}
+
+clearIdea () {
+  find . -name .idea -type d -print0|xargs -0 rm -rf --
 }
 
 ##################################################################
