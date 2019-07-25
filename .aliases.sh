@@ -9,6 +9,29 @@ alias envcfg='nvim ~/.zshenv'
 alias reload='source ~/.zshrc'
 
 alias vpn='networksetup -connectpppoeservice "Concentra VPN"'
+##################################################################
+# Work                                                           #
+##################################################################
+alias orgvue='cd /Users/sean.mcgroarty/code/orgvue-api'
+alias crontab="VIM_CRONTAB=true crontab"
+
+intelli () {
+  if [ -z "$1" ]; then
+    echo "specify a lib or app u dope"
+  elif [[ "$1" == "." ]];
+  then
+    open -a IntelliJ\ IDEA\ CE .
+  elif [ -d "$ORGVUE_API/app/$1" ];
+  then
+    open -a IntelliJ\ IDEA\ CE "$ORGVUE_API/app/$1"
+  elif [ -d "$ORGVUE_API/lib/$1" ];
+  then
+    open -a IntelliJ\ IDEA\ CE "$ORGVUE_API/lib/$1"
+  else
+    echo "OI! $1 was not found in libs or apps"
+  fi
+}
+compdef '_files -W "$ORGVUE_API/lib" "ORGVUE_API/app"' intelli
 
 ##################################################################
 # Scala                                                          #
@@ -52,6 +75,7 @@ function gco () {
 ##################################################################
 # General                                                        #
 ##################################################################
+
 
 alias crontab="VIM_CRONTAB=true crontab"
 
