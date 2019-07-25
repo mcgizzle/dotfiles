@@ -7,6 +7,17 @@ alias zshcfg='nvim ~/.zshrc'
 alias aliascfg='nvim ~/.aliases.sh'
 alias reload='source ~/.zshrc'
 
+alias vpn='networksetup -connectpppoeservice "Concentra VPN"'
+
+##################################################################
+# HCM                                                            #
+##################################################################
+
+alias hcm='cd $HOME/code/hcm'
+alias hcmb='cd $HOME/code/hcm/hcm-backend'
+alias hcma='cd $HOME/code/hcm/hcm-admin'
+alias hcmf='cd $HOME/code/hcm/hcm/hcm-frontend'
+
 ##################################################################
 # HCM                                                            #
 ##################################################################
