@@ -20,15 +20,6 @@ alias hcma='cd $HOME/code/hcm/hcm-admin'
 alias hcmf='cd $HOME/code/hcm/hcm/hcm-frontend'
 
 ##################################################################
-# HCM                                                            #
-##################################################################
-
-alias hcm='cd $HOME/code/hcm'
-alias hcmb='cd $HOME/code/hcm/hcm-backend'
-alias hcma='cd $HOME/code/hcm/hcm-admin'
-alias hcmf='cd $HOME/code/hcm/hcm/hcm-frontend'
-
-##################################################################
 # Scala                                                          #
 ##################################################################
 
