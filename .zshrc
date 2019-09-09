@@ -15,10 +15,9 @@ plugins=(git zsh-syntax-highlighting)
 source $ZSH/oh-my-zsh.sh
 source $HOME/.aliases.sh
 
-export PATH="$HOME/code/orgvue-api-docker/bin:$PATH"
-
 eval $(thefuck --alias)
-eval "$(direnv hook zsh)"
+
+alias pi="ssh -p $PI_PORT $PI_DOMAIN"
 
 # Load .aliases.sh on cd into directory
 autoload -U add-zsh-hook
