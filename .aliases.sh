@@ -26,6 +26,7 @@ alias hcmf='cd $HOME/code/hcm/hcm-frontend'
 intelli () {
   open -a IntelliJ\ IDEA\ CE $@
 }
+compdef '_files -W "$HOME/code"' intelli
 
 gpgSbt () {
   gpg --homedir . "$@"
