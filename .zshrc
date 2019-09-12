@@ -18,7 +18,6 @@ source $HOME/.aliases.sh
 export PATH="$HOME/code/orgvue-api-docker/bin:$PATH"
 
 eval $(thefuck --alias)
-eval "$(direnv hook zsh)"
 
 # Load .aliases.sh on cd into directory
 autoload -U add-zsh-hook
@@ -51,4 +50,6 @@ $$  /   \$$ |\$$$$$$$\ $$ |\$$$$$$$\ \$$$$$$  |$$ | $$ | $$ |\$$$$$$$\       $$ 
                                                                                                                                             
 '
 text=$'\e[1;32m'
-printf "%s\n" "${text}$intro${text}"
+if [[ $(tput cols) -gt "200" && $(tput lines) -gt "8" ]]; then  
+  printf "%s\n" "${text}$intro${text}"
+fi
