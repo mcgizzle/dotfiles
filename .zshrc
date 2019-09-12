@@ -50,4 +50,4 @@ $$  /   \$$ |\$$$$$$$\ $$ |\$$$$$$$\ \$$$$$$  |$$ | $$ | $$ |\$$$$$$$\       $$ 
                                                                                                                                             
 '
 text=$'\e[1;32m'
-printf "%s\n" "${text}$intro${text}"
+#printf "%s\n" "${text}$intro${text}"
