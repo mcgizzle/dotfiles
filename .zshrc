@@ -15,9 +15,9 @@ plugins=(git zsh-syntax-highlighting)
 source $ZSH/oh-my-zsh.sh
 source $HOME/.aliases.sh
 
-export PATH="$HOME/.local/bin:$PATH"
+eval $(thefuck --alias)
 
-#eval $(thefuck --alias)
+alias pi="ssh -p $PI_PORT $PI_DOMAIN"
 
 # Load .aliases.sh on cd into directory
 autoload -U add-zsh-hook
@@ -50,4 +50,4 @@ $$  /   \$$ |\$$$$$$$\ $$ |\$$$$$$$\ \$$$$$$  |$$ | $$ | $$ |\$$$$$$$\       $$ 
                                                                                                                                             
 '
 text=$'\e[1;32m'
-printf "%s\n" "${text}$intro${text}"
+#printf "%s\n" "${text}$intro${text}"

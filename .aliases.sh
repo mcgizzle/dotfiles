@@ -17,11 +17,20 @@ alias vpn='networksetup -connectpppoeservice "Concentra VPN"'
 alias hcm='cd $HOME/code/hcm'
 alias hcmb='cd $HOME/code/hcm/hcm-backend'
 alias hcma='cd $HOME/code/hcm/hcm-admin'
-alias hcmf='cd $HOME/code/hcm/hcm/hcm-frontend'
+alias hcmf='cd $HOME/code/hcm/hcm-frontend'
 
 ##################################################################
 # Scala                                                          #
 ##################################################################
+
+intelli () {
+  open -a IntelliJ\ IDEA\ CE $@
+}
+compdef '_files -W "$HOME/code"' intelli
+
+gpgSbt () {
+  gpg --homedir . "$@"
+}
 
 findscala () {
   grep -r --include \*.scala $1 .
@@ -47,8 +56,9 @@ function gco () {
 # General                                                        #
 ##################################################################
 
-alias crontab="VIM_CRONTAB=true crontab"
-
+trash () {
+  mv $1 $HOME/.Trash
+}
 vport () {
   lsof -i :"$1"
 }
