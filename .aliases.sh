@@ -24,7 +24,7 @@ alias hcmf='cd $HOME/code/hcm/hcm-frontend'
 ##################################################################
 
 intelli () {
-  open -a IntelliJ\ IDEA\ CE $@
+  open -a IntelliJ\ IDEA\ CE "$HOME/code/$@"
 }
 compdef '_files -W "$HOME/code"' intelli
 
@@ -52,9 +52,14 @@ function gco () {
   git checkout "$1"
 }
 
+function gcr () {
+  git clone --recursive "$@"
+}
 ##################################################################
 # General                                                        #
 ##################################################################
+
+alias dir="basename $PWD"
 
 trash () {
   mv $1 $HOME/.Trash

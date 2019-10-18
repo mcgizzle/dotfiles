@@ -13,12 +13,12 @@ setopt HIST_REDUCE_BLANKS
 setopt HIST_VERIFY         
 setopt HIST_BEEP       
 
+HISTSIZE=10000000
+SAVEHIST=10000000
 export HISTFILE="$HOME/.history"
 export SAVEHIST=$HISTSIZE
 
-HISTSIZE=10000000
-SAVEHIST=10000000
-
+SPACESHIP_KUBECONTEXT_SHOW=false
 SPACESHIP_USER_SHOW="ssh"
 SPACESHIP_HOST_SHOW="ssh"
 SPACESHIP_USER_SUFFIX=" ➜  "
@@ -37,6 +37,8 @@ source $HOME/.aliases.sh
 eval $(thefuck --alias)
 
 alias pi="ssh -p $PI_PORT $PI_DOMAIN"
+
+source $HOME/.nix-profile/etc/profile.d/nix.sh
 
 # Load .aliases.sh on cd into directory
 autoload -U add-zsh-hook
@@ -70,3 +72,7 @@ $$  /   \$$ |\$$$$$$$\ $$ |\$$$$$$$\ \$$$$$$  |$$ | $$ | $$ |\$$$$$$$\       $$ 
 '
 text=$'\e[1;32m'
 #printf "%s\n" "${text}$intro${text}"
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/Users/seanmcgroarty/.sdkman"
+[[ -s "/Users/seanmcgroarty/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/seanmcgroarty/.sdkman/bin/sdkman-init.sh"
