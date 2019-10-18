@@ -33,6 +33,7 @@ plugins=(git zsh-syntax-highlighting)
 # STARTUP COMMANDS
 source $ZSH/oh-my-zsh.sh
 source $HOME/.aliases.sh
+source $HOME/.permutive.sh
 
 eval $(thefuck --alias)
 
@@ -71,7 +72,9 @@ $$  /   \$$ |\$$$$$$$\ $$ |\$$$$$$$\ \$$$$$$  |$$ | $$ | $$ |\$$$$$$$\       $$ 
                                                                                                                                             
 '
 text=$'\e[1;32m'
-#printf "%s\n" "${text}$intro${text}"
+if [[ $(tput cols) -gt "200" && $(tput lines) -gt "8" ]]; then  
+  printf "%s\n" "${text}$intro${text}"
+fi
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/Users/seanmcgroarty/.sdkman"
