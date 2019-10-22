@@ -12,6 +12,7 @@ setopt HIST_SAVE_NO_DUPS
 setopt HIST_REDUCE_BLANKS  
 setopt HIST_VERIFY         
 setopt HIST_BEEP       
+unsetopt BEEP
 
 HISTSIZE=10000000
 SAVEHIST=10000000
@@ -28,7 +29,7 @@ SPACESHIP_DIR_PREFIX=""
 ZSH_THEME="spaceship"
 ZSH_DISABLE_COMPFIX=true
 
-plugins=(git zsh-syntax-highlighting)
+plugins=(git zsh-syntax-highlighting docker docker-compose)
 
 # STARTUP COMMANDS
 source $ZSH/oh-my-zsh.sh

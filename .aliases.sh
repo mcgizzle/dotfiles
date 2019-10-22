@@ -58,7 +58,6 @@ function gcr () {
 ##################################################################
 # General                                                        #
 ##################################################################
-
 alias dir="basename $PWD"
 
 trash () {
@@ -135,6 +134,9 @@ function cfg(){
 # Docker                                                         #
 ##################################################################
 
+function ds() {
+  docker stop $(docker ps | grep $1 | cut -f 1 -d " ")
+}
 function docker-ip(){
   docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' "$1"
 }
