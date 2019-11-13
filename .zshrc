@@ -26,8 +26,12 @@ SPACESHIP_USER_SUFFIX=" ➜  "
 SPACESHIP_USER_COLOR="cyan"
 SPACESHIP_CHAR_SYMBOL="λ "
 SPACESHIP_DIR_PREFIX=""
+SPACESHIP_DIR_COLOR="147"
 ZSH_THEME="spaceship"
 ZSH_DISABLE_COMPFIX=true
+DRACULA_ARROW_ICON="λ"
+
+SPACESHIP_GIT_STATUS_COLOR="green"
 
 plugins=(git zsh-syntax-highlighting docker docker-compose)
 

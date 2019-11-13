@@ -58,7 +58,8 @@ function gcr () {
 ##################################################################
 # General                                                        #
 ##################################################################
-alias dir="basename $PWD"
+alias dir='basename `PWD`'
+alias lsf='ls -l | awk '\''{ print $9 }'\'''
 
 trash () {
   mv $1 $HOME/.Trash
@@ -134,8 +135,8 @@ function cfg(){
 # Docker                                                         #
 ##################################################################
 
-function ds() {
-  docker stop $(docker ps | grep $1 | cut -f 1 -d " ")
+function docker-stop() {
+  docker stop $(docker ps | grep "$1" | cut -f 1 -d " ")
 }
 function docker-ip(){
   docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' "$1"
