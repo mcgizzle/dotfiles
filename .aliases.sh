@@ -8,16 +8,30 @@ alias aliascfg='nvim ~/.aliases.sh'
 alias envcfg='nvim ~/.zshenv'
 alias reload='source ~/.zshrc'
 
-alias vpn='networksetup -connectpppoeservice "Concentra VPN"'
-
 ##################################################################
-# HCM                                                            #
+# General                                                        #
 ##################################################################
+alias dir='basename `PWD`'
 
-alias hcm='cd $HOME/code/hcm'
-alias hcmb='cd $HOME/code/hcm/hcm-backend'
-alias hcma='cd $HOME/code/hcm/hcm-admin'
-alias hcmf='cd $HOME/code/hcm/hcm-frontend'
+trash () {
+  mv "$1" "$HOME/.Trash"
+}
+vport () {
+  lsof -i :"$1"
+}
+
+kpid () {
+  kill -9 "$1"
+}
+
+ignore (){
+  echo "$1" >> .gitignore
+}
+
+function cs(){
+  cd $1;
+  ls
+}
 
 ##################################################################
 # Scala                                                          #
@@ -45,7 +59,7 @@ alias gfo='git fetch origin'
 alias gpu='git push -u origin "$(git symbolic-ref --short HEAD)"'
 
 function  gpl () {
-  git pull origin $1
+  git pull origin "$1"
 }
 
 function gco () {
@@ -55,52 +69,6 @@ function gco () {
 function gcr () {
   git clone --recursive "$@"
 }
-##################################################################
-# General                                                        #
-##################################################################
-alias dir='basename `PWD`'
-alias lsf='ls -l | awk '\''{ print $9 }'\'''
-
-trash () {
-  mv $1 $HOME/.Trash
-}
-vport () {
-  lsof -i :"$1"
-}
-
-kpid () {
-  kill -9 "$1"
-}
-
-ignore (){
-  echo "$1" >> .gitignore
-}
-
-function cs(){
-  cd $1;
-  ls
-}
-
-function sr () {
-
-  find "$3" -name "$4" | while read line; do
-
-    echo "Working on $line"           
-
-    temp="$line.tmp"
- 
-    sed -e "s/$1/$2/g" $line > $temp 
-
-    mv $temp "$line"
-
-  done
-}  
-
-function gsearch () {
-  echo "Searching The Google"
-  open http://google.com/search\?q\=$1
-}
-
 ##################################################################
 # Postgres                                                       #
 ##################################################################
@@ -115,25 +83,12 @@ alias pgcount="psql -U postgres --dbname=OrgVue -Atc 'SELECT count(*) FROM pg_st
 
 alias vim='nvim'
 alias pathonv='cd ~/.config/nvim/bundle'
-function cfg(){
-        if [ -z "$1" ]
-        then
-          echo "Specify nvim/vim"
-        elif [ "$1" = "vim" ]
-        then
-          echo "open"
-          vim ~/.vimrc
-        elif [ "$1" = "nvim" ]
-        then
-          nvim ~/.config/nvim/init.vim
-        else
-          echo "Options are: nvim/vim"
-        fi
-      }
+alias vimcfg='nvim ~/.config/nvim/init.vim'
 
 ##################################################################
 # Kubernetes                                                     #
 ##################################################################
+
 alias kctx=' kubectl config use-context '"$1"''
 
 ##################################################################
@@ -152,8 +107,11 @@ function docker-ip(){
 }
 
 ##################################################################
-# InfluxDB                                                       #
+# HCM                                                            #
 ##################################################################
 
-alias ifdbstart='influxd -config /usr/local/etc/influxdb.conf'
+alias hcm='cd $HOME/code/hcm'
+alias hcmb='cd $HOME/code/hcm/hcm-backend'
+alias hcma='cd $HOME/code/hcm/hcm-admin'
+alias hcmf='cd $HOME/code/hcm/hcm-frontend'
 
