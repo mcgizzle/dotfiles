@@ -132,8 +132,17 @@ function cfg(){
       }
 
 ##################################################################
+# Kubernetes                                                     #
+##################################################################
+alias kctx=' kubectl config use-context '"$1"''
+
+##################################################################
 # Docker                                                         #
 ##################################################################
+
+function docker-upf() {
+  docker-compose up -d "$1" && docker-compose logs -f "$1"
+}
 
 function docker-stop() {
   docker stop $(docker ps | grep "$1" | cut -f 1 -d " ")
