@@ -19,7 +19,7 @@ SAVEHIST=10000000
 export HISTFILE="$HOME/.history"
 export SAVEHIST=$HISTSIZE
 
-SPACESHIP_KUBECONTEXT_SHOW=false
+SPACESHIP_KUBECONTEXT_SHOW=true
 SPACESHIP_USER_SHOW="ssh"
 SPACESHIP_HOST_SHOW="ssh"
 SPACESHIP_USER_SUFFIX=" ➜  "
@@ -38,7 +38,6 @@ plugins=(git zsh-syntax-highlighting docker docker-compose)
 # STARTUP COMMANDS
 source $ZSH/oh-my-zsh.sh
 source $HOME/.aliases.sh
-source $HOME/.permutive.sh
 
 eval $(thefuck --alias)
 
