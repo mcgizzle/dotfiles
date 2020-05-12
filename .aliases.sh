@@ -16,6 +16,7 @@ alias dir='basename `PWD`'
 trash () {
   mv "$1" "$HOME/.Trash"
 }
+
 vport () {
   lsof -i :"$1"
 }
@@ -26,11 +27,6 @@ kpid () {
 
 ignore (){
   echo "$1" >> .gitignore
-}
-
-function cs(){
-  cd $1;
-  ls
 }
 
 ##################################################################
@@ -54,18 +50,6 @@ findscala () {
 # Git Config                                                     #
 ##################################################################
 
-alias gs='git status'
-alias gfo='git fetch origin'
-alias gpu='git push -u origin "$(git symbolic-ref --short HEAD)"'
-
-function  gpl () {
-  git pull origin "$1"
-}
-
-function gco () {
-  git checkout "$1"
-}
-
 function gcr () {
   git clone --recursive "$@"
 }
@@ -76,6 +60,8 @@ function gcr () {
 alias pgstart='pg_ctl -D /usr/local/var/postgres start'
 alias pgstop='pg_ctl -D /usr/local/var/postgres stop'
 alias pgcount="psql -U postgres --dbname=OrgVue -Atc 'SELECT count(*) FROM pg_stat_activity'"
+
+alias pgrun='docker run --rm --name postgres-setup -p 5000:5432 -e POSTGRES_DB=mgmt -v ~/state/postgres:/var/lib/postgresql/data -d postgres:9.6.4'
 
 ##################################################################
 # Vim                                                            #
@@ -89,7 +75,7 @@ alias vimcfg='nvim ~/.config/nvim/init.vim'
 # Kubernetes                                                     #
 ##################################################################
 
-alias kctx=' kubectl config use-context '"$1"''
+alias kctx='kubectl config use-context '"$1"''
 
 ##################################################################
 # Docker                                                         #

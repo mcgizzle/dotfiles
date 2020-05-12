@@ -19,7 +19,9 @@ SAVEHIST=10000000
 export HISTFILE="$HOME/.history"
 export SAVEHIST=$HISTSIZE
 
+SPACESHIP_KUBECTL_SHOW=true
 SPACESHIP_KUBECONTEXT_SHOW=true
+SPACESHIP_KUBECTL_VERSION_SHOW=false
 SPACESHIP_USER_SHOW="ssh"
 SPACESHIP_HOST_SHOW="ssh"
 SPACESHIP_USER_SUFFIX=" ➜  "
@@ -33,17 +35,16 @@ DRACULA_ARROW_ICON="λ"
 
 SPACESHIP_GIT_STATUS_COLOR="green"
 
-plugins=(git zsh-syntax-highlighting docker docker-compose)
+plugins=(git zsh-syntax-highlighting docker docker-compose kubetail)
 
 # STARTUP COMMANDS
 source $ZSH/oh-my-zsh.sh
 source $HOME/.aliases.sh
+source $HOME/.hu.sh
 
 eval $(thefuck --alias)
 
 alias pi="ssh -p $PI_PORT $PI_DOMAIN"
-
-source $HOME/.nix-profile/etc/profile.d/nix.sh
 
 # Load .aliases.sh on cd into directory
 autoload -U add-zsh-hook
@@ -80,6 +81,13 @@ if [[ $(tput cols) -gt "200" && $(tput lines) -gt "8" ]]; then
   printf "%s\n" "${text}$intro${text}"
 fi
 
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/google-cloud-sdk/path.zsh.inc"; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/google-cloud-sdk/completion.zsh.inc"; fi
+
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/Users/seanmcgroarty/.sdkman"
-[[ -s "/Users/seanmcgroarty/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/seanmcgroarty/.sdkman/bin/sdkman-init.sh"
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
