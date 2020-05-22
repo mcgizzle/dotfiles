@@ -6,7 +6,7 @@ alias dotcfg='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 alias zshcfg='nvim ~/.zshrc'
 alias aliascfg='nvim ~/.aliases.sh'
 alias envcfg='nvim ~/.zshenv'
-alias reload='source ~/.zshrc'
+alias reload='source ~/.zshenv && source ~/.zshrc'
 
 ##################################################################
 # General                                                        #

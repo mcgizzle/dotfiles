@@ -35,12 +35,18 @@ DRACULA_ARROW_ICON="λ"
 
 SPACESHIP_GIT_STATUS_COLOR="green"
 
-plugins=(git zsh-syntax-highlighting docker docker-compose kubetail)
+if ! [ -x "$(command -v kubetail)" ]; then
+  plugins=(git zsh-syntax-highlighting docker docker-compose)
+else
+  plugins=(git zsh-syntax-highlighting docker docker-compose kubetail)
+fi
 
 # STARTUP COMMANDS
 source $ZSH/oh-my-zsh.sh
 source $HOME/.aliases.sh
-source $HOME/.hu.sh
+if [ -f $HOME/.hu.sh ]; then
+  source $HOME/.hu.sh
+fi
 
 eval $(thefuck --alias)
 
