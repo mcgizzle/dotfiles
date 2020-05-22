@@ -49,7 +49,6 @@ if [ -f $HOME/.hu.sh ]; then
 fi
 
 eval $(thefuck --alias)
-
 alias pi="ssh -p $PI_PORT $PI_DOMAIN"
 
 # Load .aliases.sh on cd into directory
