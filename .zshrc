@@ -50,7 +50,7 @@ fi
 
 eval $(thefuck --alias)
 
-alias pi="ssh -p $PI_PORT $PI_DOMAIN"
+alias pi="ssh pi@$PI_LOCAL"
 
 # Load .aliases.sh on cd into directory
 autoload -U add-zsh-hook
@@ -63,6 +63,7 @@ load-local-conf() {
 add-zsh-hook chpwd load-local-conf
 load-local-conf
 
+#ln -s "/Volumes/T7 Touch/Docker/Data/vms/0/data/Docker.raw" ~/Library/Containers/com.docker.docker/Data/vms/0/data/Docker.raw
 
 lookAway () {
   while true; do

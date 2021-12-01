@@ -2,7 +2,7 @@
 # DOT Files                                                      #
 ##################################################################
 
-alias dotcfg='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+alias dotcfg='/usr/local/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 alias zshcfg='nvim ~/.zshrc'
 alias aliascfg='nvim ~/.aliases.sh'
 alias envcfg='nvim ~/.zshenv'
