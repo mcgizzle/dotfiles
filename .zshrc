@@ -63,8 +63,6 @@ load-local-conf() {
 add-zsh-hook chpwd load-local-conf
 load-local-conf
 
-#ln -s "/Volumes/T7 Touch/Docker/Data/vms/0/data/Docker.raw" ~/Library/Containers/com.docker.docker/Data/vms/0/data/Docker.raw
-
 lookAway () {
   while true; do
     osascript -e 'display notification "Look away from the screen!!" with title "Hello there" sound name "hero"'
@@ -98,3 +96,5 @@ if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/google-clou
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"

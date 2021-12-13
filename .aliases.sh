@@ -13,6 +13,18 @@ alias reload='source ~/.zshenv && source ~/.zshrc'
 ##################################################################
 alias dir='basename `PWD`'
 
+alias v="nvim"
+
+function :w () {
+  exit
+}
+function :q () {
+  exit
+}
+function :wq () {
+  exit
+}
+
 trash () {
   mv "$1" "$HOME/.Trash"
 }
@@ -52,6 +64,9 @@ findscala () {
 
 function gcr () {
   git clone --recursive "$@"
+}
+function gfpush () {
+  ggpush -f
 }
 ##################################################################
 # Postgres                                                       #
