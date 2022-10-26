@@ -2,7 +2,7 @@
 # DOT Files                                                      #
 ##################################################################
 
-alias dotcfg='/usr/local/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+alias dotcfg='git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 alias zshcfg='nvim ~/.zshrc'
 alias aliascfg='nvim ~/.aliases.sh'
 alias envcfg='nvim ~/.zshenv'
@@ -59,7 +59,7 @@ findscala () {
 }
 
 ##################################################################
-# Git Config                                                     #
+# Git                                                      #
 ##################################################################
 
 function gcr () {
@@ -67,6 +67,9 @@ function gcr () {
 }
 function gfpush () {
   ggpush -f
+}
+function ghCloseUpdates () {
+  for i in $(gh pr list --json headRefName | jq -r '.[] | select(.headRefName | startswith("update/")) | .headRefName' ); do gh pr close $i ; done
 }
 ##################################################################
 # Postgres                                                       #

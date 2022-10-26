@@ -35,20 +35,20 @@ DRACULA_ARROW_ICON="λ"
 
 SPACESHIP_GIT_STATUS_COLOR="green"
 
-if ! [ -x "$(command -v kubetail)" ]; then
-  plugins=(git zsh-syntax-highlighting docker docker-compose)
-else
-  plugins=(git zsh-syntax-highlighting docker docker-compose kubetail)
-fi
+plugins=(
+  git 
+  zsh-syntax-highlighting 
+  docker 
+  docker-compose 
+  kubetail
+)
 
 # STARTUP COMMANDS
 source $ZSH/oh-my-zsh.sh
 source $HOME/.aliases.sh
-if [ -f $HOME/.hu.sh ]; then
-  source $HOME/.hu.sh
+if [ -f $HOME/.zshenv.hu.sh ]; then
+  source $HOME/.zshenv.hu.sh
 fi
-
-eval $(thefuck --alias)
 
 alias pi="ssh pi@$PI_LOCAL"
 
@@ -86,15 +86,11 @@ if [[ $(tput cols) -gt "200" && $(tput lines) -gt "8" ]]; then
   printf "%s\n" "${text}$intro${text}"
 fi
 
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/google-cloud-sdk/path.zsh.inc"; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/google-cloud-sdk/completion.zsh.inc"; fi
+source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
-source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
