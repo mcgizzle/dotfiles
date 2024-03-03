@@ -52,6 +52,8 @@ elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
     )
 fi
 
+fpath=(/opt/homebrew/share/zsh/site-functions $fpath)
+
 # STARTUP COMMANDS
 source $ZSH/oh-my-zsh.sh
 source $HOME/.aliases.sh
@@ -72,13 +74,6 @@ load-local-conf() {
 add-zsh-hook chpwd load-local-conf
 load-local-conf
 
-lookAway () {
-  while true; do
-    osascript -e 'display notification "Look away from the screen!!" with title "Hello there" sound name "hero"'
-    sleep 1200 
-  done & 
-}
-
 intro='
 $$\      $$\           $$\                                                   $$\      $$\                       $$\                         
 $$ | $\  $$ |          $$ |                                                  $$$\    $$$ |                      $$ |                        
@@ -97,13 +92,17 @@ fi
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
     # Source Google Cloud SDK completion script only on macOS
-    source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
+    source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+    [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+
+    eval "$(rbenv init - --path)"
+    [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
+
+    eval "$(jenv init -)"
 fi
 
-
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
-
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
