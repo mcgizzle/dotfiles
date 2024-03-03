@@ -19,8 +19,7 @@ SAVEHIST=10000000
 export HISTFILE="$HOME/.history"
 export SAVEHIST=$HISTSIZE
 
-SPACESHIP_KUBECTL_SHOW=true
-SPACESHIP_KUBECONTEXT_SHOW=true
+SPACESHIP_KUBECTL_CONTEXT_SHOW=true
 SPACESHIP_KUBECTL_VERSION_SHOW=false
 SPACESHIP_USER_SHOW="ssh"
 SPACESHIP_HOST_SHOW="ssh"
@@ -35,13 +34,23 @@ DRACULA_ARROW_ICON="λ"
 
 SPACESHIP_GIT_STATUS_COLOR="green"
 
-plugins=(
-  git 
-  zsh-syntax-highlighting 
-  docker 
-  docker-compose 
-  kubetail
-)
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    # macOS specific plugins
+    plugins=(
+      git 
+      zsh-syntax-highlighting 
+      docker 
+      docker-compose 
+      kubetail
+    )
+elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    plugins=(
+      git 
+      zsh-syntax-highlighting 
+      docker 
+    )
+fi
 
 # STARTUP COMMANDS
 source $ZSH/oh-my-zsh.sh
@@ -86,7 +95,11 @@ if [[ $(tput cols) -gt "200" && $(tput lines) -gt "8" ]]; then
   printf "%s\n" "${text}$intro${text}"
 fi
 
-source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    # Source Google Cloud SDK completion script only on macOS
+    source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
+fi
+
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
