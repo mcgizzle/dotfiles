@@ -19,23 +19,21 @@ SAVEHIST=10000000
 export HISTFILE="$HOME/.history"
 export SAVEHIST=$HISTSIZE
 
-SPACESHIP_KUBECTL_CONTEXT_SHOW=true
-SPACESHIP_KUBECTL_VERSION_SHOW=false
-SPACESHIP_USER_SHOW="ssh"
-SPACESHIP_HOST_SHOW="ssh"
-SPACESHIP_USER_SUFFIX=" ➜  "
-SPACESHIP_USER_COLOR="cyan"
-SPACESHIP_CHAR_SYMBOL="λ "
-SPACESHIP_DIR_PREFIX=""
-SPACESHIP_DIR_COLOR="147"
-ZSH_THEME="spaceship"
 ZSH_DISABLE_COMPFIX=true
 DRACULA_ARROW_ICON="λ"
 
-SPACESHIP_GIT_STATUS_COLOR="green"
-
-
 if [[ "$OSTYPE" == "darwin"* ]]; then
+    ZSH_THEME="spaceship"
+    SPACESHIP_GIT_STATUS_COLOR="green"
+    SPACESHIP_KUBECTL_CONTEXT_SHOW=true
+    SPACESHIP_KUBECTL_VERSION_SHOW=false
+    SPACESHIP_USER_SHOW="ssh"
+    SPACESHIP_HOST_SHOW="ssh"
+    SPACESHIP_USER_SUFFIX=" ➜  "
+    SPACESHIP_USER_COLOR="cyan"
+    SPACESHIP_CHAR_SYMBOL="λ "
+    SPACESHIP_DIR_PREFIX=""
+    SPACESHIP_DIR_COLOR="147"
     # macOS specific plugins
     plugins=(
       git 
@@ -44,6 +42,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
       docker-compose 
       kubetail
     )
+    fpath=(/opt/homebrew/share/zsh/site-functions $fpath)
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
     plugins=(
       git 
@@ -52,27 +51,12 @@ elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
     )
 fi
 
-fpath=(/opt/homebrew/share/zsh/site-functions $fpath)
-
 # STARTUP COMMANDS
 source $ZSH/oh-my-zsh.sh
 source $HOME/.aliases.sh
 if [ -f $HOME/.zshenv.hu.sh ]; then
   source $HOME/.zshenv.hu.sh
 fi
-
-alias pi="ssh pi@$PI_LOCAL"
-
-# Load .aliases.sh on cd into directory
-autoload -U add-zsh-hook
-load-local-conf() {
-     # check file exists, is regular file and is readable:
-     if [[ -f .aliases.sh && -r .aliases.sh ]]; then
-       source .aliases.sh
-     fi
-}
-add-zsh-hook chpwd load-local-conf
-load-local-conf
 
 intro='
 $$\      $$\           $$\                                                   $$\      $$\                       $$\                         
