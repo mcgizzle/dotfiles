@@ -7,7 +7,6 @@ export PATH=${PATH}:$HOME/.local/bin
 export PATH=${PATH}:$HOME/code/permutive/blobby/bin
 export PATH=${PATH}:$HOME/code/scripts/db-proxy/bin
 export PATH=${PATH}:$HOME/code/scripts/kafka/bin
-#export PATH=${PATH}:/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/bin
 export PATH=${PATH}:$HOME/Library/Python/3.8/bin
 export PATH=${PATH}:$HOME/code/graalvm-jdk-17.0.7+8.1/Contents/Home/bin
 export PATH=${PATH}:/opt/homebrew/bin
