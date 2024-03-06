@@ -19,23 +19,21 @@ SAVEHIST=10000000
 export HISTFILE="$HOME/.history"
 export SAVEHIST=$HISTSIZE
 
-SPACESHIP_KUBECTL_CONTEXT_SHOW=true
-SPACESHIP_KUBECTL_VERSION_SHOW=false
-SPACESHIP_USER_SHOW="ssh"
-SPACESHIP_HOST_SHOW="ssh"
-SPACESHIP_USER_SUFFIX=" ➜  "
-SPACESHIP_USER_COLOR="cyan"
-SPACESHIP_CHAR_SYMBOL="λ "
-SPACESHIP_DIR_PREFIX=""
-SPACESHIP_DIR_COLOR="147"
-ZSH_THEME="spaceship"
 ZSH_DISABLE_COMPFIX=true
 DRACULA_ARROW_ICON="λ"
 
-SPACESHIP_GIT_STATUS_COLOR="green"
-
-
 if [[ "$OSTYPE" == "darwin"* ]]; then
+    ZSH_THEME="spaceship"
+    SPACESHIP_GIT_STATUS_COLOR="green"
+    SPACESHIP_KUBECTL_CONTEXT_SHOW=true
+    SPACESHIP_KUBECTL_VERSION_SHOW=false
+    SPACESHIP_USER_SHOW="ssh"
+    SPACESHIP_HOST_SHOW="ssh"
+    SPACESHIP_USER_SUFFIX=" ➜  "
+    SPACESHIP_USER_COLOR="cyan"
+    SPACESHIP_CHAR_SYMBOL="λ "
+    SPACESHIP_DIR_PREFIX=""
+    SPACESHIP_DIR_COLOR="147"
     # macOS specific plugins
     plugins=(
       git 
@@ -44,6 +42,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
       docker-compose 
       kubetail
     )
+    fpath=(/opt/homebrew/share/zsh/site-functions $fpath)
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
     plugins=(
       git 
@@ -58,24 +57,6 @@ source $HOME/.aliases.sh
 if [ -f $HOME/.zshenv.hu.sh ]; then
   source $HOME/.zshenv.hu.sh
 fi
-
-# Load .aliases.sh on cd into directory
-autoload -U add-zsh-hook
-load-local-conf() {
-     # check file exists, is regular file and is readable:
-     if [[ -f .aliases.sh && -r .aliases.sh ]]; then
-       source .aliases.sh
-     fi
-}
-add-zsh-hook chpwd load-local-conf
-load-local-conf
-
-lookAway () {
-  while true; do
-    osascript -e 'display notification "Look away from the screen!!" with title "Hello there" sound name "hero"'
-    sleep 1200 
-  done & 
-}
 
 intro='
 $$\      $$\           $$\                                                   $$\      $$\                       $$\                         
@@ -94,14 +75,19 @@ if [[ $(tput cols) -gt "200" && $(tput lines) -gt "8" ]]; then
 fi
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    # Source Google Cloud SDK completion script only on macOS
-    source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
+    source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
+    source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
+
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+    [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+
+    eval "$(rbenv init - --path)"
+    [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
+
+    eval "$(jenv init -)"
 fi
 
-
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
-
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

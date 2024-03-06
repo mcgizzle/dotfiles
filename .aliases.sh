@@ -46,7 +46,7 @@ ignore (){
 ##################################################################
 
 intelli () {
-  open -a IntelliJ\ IDEA\ CE "$HOME/code/$@"
+  open -a IntelliJ\ IDEA "$HOME/code/$@"
 }
 compdef '_files -W "$HOME/code"' intelli
 
