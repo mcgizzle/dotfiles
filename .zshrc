@@ -59,8 +59,6 @@ if [ -f $HOME/.zshenv.hu.sh ]; then
   source $HOME/.zshenv.hu.sh
 fi
 
-alias pi="ssh pi@$PI_LOCAL"
-
 # Load .aliases.sh on cd into directory
 autoload -U add-zsh-hook
 load-local-conf() {
