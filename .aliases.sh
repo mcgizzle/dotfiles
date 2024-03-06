@@ -15,6 +15,8 @@ alias dir='basename `PWD`'
 
 alias v="nvim"
 
+alias pi='ssh mcgizzle@pi.local'
+
 function :w () {
   exit
 }
