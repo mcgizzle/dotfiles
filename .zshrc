@@ -34,5 +34,3 @@ elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
 else
   "Unknown OS $OSTYPE"
 fi
-
-source $HOME/.intro.sh
