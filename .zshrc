@@ -19,18 +19,17 @@ export SAVEHIST=10000000
 
 ZSH_DISABLE_COMPFIX=true
 
-
-# STARTUP COMMANDS
-source $ZSH/oh-my-zsh.sh
-source $HOME/.aliases.sh
-if [ -f $HOME/.zshenv.hu.sh ]; then
-  source $HOME/.zshenv.hu.sh
-fi
-
 if [[ "$OSTYPE" == "darwin"* ]]; then
   source "$HOME/.darwin.sh"
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
   source "$HOME/.debian.sh"
 else
   "Unknown OS $OSTYPE"
+fi
+
+# STARTUP COMMANDS
+source $ZSH/oh-my-zsh.sh
+source $HOME/.aliases.sh
+if [ -f $HOME/.zshenv.hu.sh ]; then
+  source $HOME/.zshenv.hu.sh
 fi
