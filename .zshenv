@@ -10,3 +10,4 @@ export PATH=${PATH}:$HOME/code/scripts/kafka/bin
 export PATH=${PATH}:$HOME/Library/Python/3.8/bin
 export PATH=${PATH}:$HOME/code/graalvm-jdk-17.0.7+8.1/Contents/Home/bin
 export PATH=${PATH}:/opt/homebrew/bin
+export PATH=${PATH}:$HOME/binaries/globby-0.1.0-Darwin-arm64
