@@ -6,7 +6,7 @@ alias dotcfg='git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 alias zshcfg='nvim ~/.zshrc'
 alias aliascfg='nvim ~/.aliases.sh'
 alias envcfg='nvim ~/.zshenv'
-alias reload='source ~/.zshenv && source ~/.zshrc'
+alias reload='exec zsh && source ~/.zshenv'
 
 ##################################################################
 # General                                                        #
@@ -15,7 +15,9 @@ alias dir='basename `PWD`'
 
 alias v="nvim"
 
-alias pi='ssh mcgizzle@pi.local'
+alias cd_root='cd $(git rev-parse --show-toplevel)'
+
+alias tf="terraform"
 
 function :w () {
   exit
@@ -31,57 +33,59 @@ trash () {
   mv "$1" "$HOME/.Trash"
 }
 
-vport () {
-  lsof -i :"$1"
-}
-
-kpid () {
-  kill -9 "$1"
-}
-
 ignore (){
   echo "$1" >> .gitignore
-}
-
-##################################################################
-# Scala                                                          #
-##################################################################
-
-intelli () {
-  open -a IntelliJ\ IDEA "$HOME/code/$@"
-}
-compdef '_files -W "$HOME/code"' intelli
-
-gpgSbt () {
-  gpg --homedir . "$@"
-}
-
-findscala () {
-  grep -r --include \*.scala $1 .
 }
 
 ##################################################################
 # Git                                                      #
 ##################################################################
 
-function gcr () {
-  git clone --recursive "$@"
-}
-function gfpush () {
-  ggpush -f
-}
-function ghCloseUpdates () {
-  for i in $(gh pr list --json headRefName | jq -r '.[] | select(.headRefName | startswith("update/")) | .headRefName' ); do gh pr close $i ; done
-}
-##################################################################
-# Postgres                                                       #
-##################################################################
+## Taken from: https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/git/git.plugin.zsh
 
-alias pgstart='pg_ctl -D /usr/local/var/postgres start'
-alias pgstop='pg_ctl -D /usr/local/var/postgres stop'
-alias pgcount="psql -U postgres --dbname=OrgVue -Atc 'SELECT count(*) FROM pg_stat_activity'"
+# Check if main exists and use instead of master
+function git_main_branch() {
+   command git rev-parse --git-dir &>/dev/null || return
+     local ref
+       for ref in refs/{heads,remotes/{origin,upstream}}/{main,trunk,mainline,default,stable,master}; do
+           if command git show-ref -q --verify $ref; then
+                 echo ${ref:t}
+                       return 0
+                           fi
+                             done
 
-alias pgrun='docker run --rm --name postgres-setup -p 5000:5432 -e POSTGRES_DB=mgmt -v ~/state/postgres:/var/lib/postgresql/data -d postgres:9.6.4'
+                               # If no main branch was found, fall back to master but return error
+                                 echo master
+                                   return 1
+                                 }
+
+function git_current_branch() {
+  git rev-parse --abbrev-ref HEAD
+}
+
+alias g='git'
+alias ggpush='git push origin "$(git_current_branch)"'
+alias gfpush='ggpush -f'
+alias ggpull='git pull origin "$(git_current_branch)"'
+alias gcma='git checkout $(git_main_branch)'
+alias gfo='git fetch origin'
+alias gpu='git push upstream'
+alias gpristine='git reset --hard && git clean --force -dfx'
+alias gwipe='git reset --hard && git clean --force -df'
+alias groh='git reset origin/$(git_current_branch) --hard'
+alias gsh='git show'
+alias gsps='git show --pretty=short --show-signature'
+alias gsts='git stash show --patch'
+alias gst='git status'
+alias gss='git status --short'
+alias gsb='git status --short --branch'
+alias gco='git checkout'
+alias gcb='git checkout -b'
+alias gcB='git checkout -B'
+alias gcd='git checkout $(git_develop_branch)'
+alias gcm='git checkout $(git_main_branch)'
+alias gcl='git clone'
+alias gclean='git clean --interactive -d'
 
 ##################################################################
 # Vim                                                            #
@@ -108,16 +112,3 @@ function docker-upf() {
 function docker-stop() {
   docker stop $(docker ps | grep "$1" | cut -f 1 -d " ")
 }
-function docker-ip(){
-  docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' "$1"
-}
-
-##################################################################
-# HCM                                                            #
-##################################################################
-
-alias hcm='cd $HOME/code/hcm'
-alias hcmb='cd $HOME/code/hcm/hcm-backend'
-alias hcma='cd $HOME/code/hcm/hcm-admin'
-alias hcmf='cd $HOME/code/hcm/hcm-frontend'
-

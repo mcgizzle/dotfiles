@@ -1,6 +1,6 @@
-export ZSH="$HOME/.oh-my-zsh"
 export VISUAL="nvim"
 export EDITOR="nvim"
+#export ZDOTDIR="$HOME/.zsh"
 export SBT_CREDENTIALS=${HOME}/.sbt/.credentials
 export CLOUDSDK_PYTHON=/usr/bin/python3
 export PATH=${PATH}:$HOME/.local/bin
