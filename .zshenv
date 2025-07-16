@@ -1,6 +1,8 @@
 export VISUAL="nvim"
 export EDITOR="nvim"
-#export ZDOTDIR="$HOME/.zsh"
+export HISTFILESIZE=100000
+export HISTSIZE=100000
+export GOOGLE_CLOUD_PROJECT=production-168016
 export SBT_CREDENTIALS=${HOME}/.sbt/.credentials
 export CLOUDSDK_PYTHON=/usr/bin/python3
 export PATH=${PATH}:$HOME/.local/bin
@@ -11,3 +13,4 @@ export PATH=${PATH}:$HOME/Library/Python/3.8/bin
 export PATH=${PATH}:$HOME/code/graalvm-jdk-17.0.7+8.1/Contents/Home/bin
 export PATH=${PATH}:/opt/homebrew/bin
 export PATH=${PATH}:$HOME/binaries/globby-0.1.0-Darwin-arm64
+export PATH="$HOME/Library/Python/3.9/bin:$PATH"

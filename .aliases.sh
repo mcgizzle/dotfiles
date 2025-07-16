@@ -64,6 +64,7 @@ function git_current_branch() {
 }
 
 alias g='git'
+alias gc='git commit --verbose'
 alias ggpush='git push origin "$(git_current_branch)"'
 alias gfpush='ggpush -f'
 alias ggpull='git pull origin "$(git_current_branch)"'
@@ -86,6 +87,8 @@ alias gcd='git checkout $(git_develop_branch)'
 alias gcm='git checkout $(git_main_branch)'
 alias gcl='git clone'
 alias gclean='git clean --interactive -d'
+alias gca='git commit --verbose --all'
+alias gd='git diff'
 
 ##################################################################
 # Vim                                                            #
