@@ -1,7 +1,5 @@
 export VISUAL="nvim"
 export EDITOR="nvim"
-export HISTFILESIZE=100000
-export HISTSIZE=100000
 export GOOGLE_CLOUD_PROJECT=production-168016
 export SBT_CREDENTIALS=${HOME}/.sbt/.credentials
 export CLOUDSDK_PYTHON=/usr/bin/python3
