@@ -13,7 +13,14 @@
 
 # Remove older command from the history if a duplicate is to be added.
 setopt HIST_IGNORE_ALL_DUPS
-export HISTFILE="$HOME/.history"
+
+# Check if we are running inside the VS Code / Cursor terminal
+# Cursor agent mode can clog up the history file
+if [[ "$TERM_PROGRAM" == "vscode" ]]; then
+  export HISTFILE="$HOME/.cursor_history"
+else
+  export HISTFILE="$HOME/.history"
+fi
 export HISTFILESIZE=100000
 export HISTSIZE=100000
 
