@@ -1,6 +1,5 @@
 export VISUAL="nvim"
 export EDITOR="nvim"
-export GOOGLE_CLOUD_PROJECT=production-168016
 export SBT_CREDENTIALS=${HOME}/.sbt/.credentials
 export CLOUDSDK_PYTHON=/usr/bin/python3
 export PATH=${PATH}:$HOME/.local/bin

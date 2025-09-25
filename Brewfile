@@ -1,10 +1,6 @@
 tap "bufbuild/buf"
 tap "goreleaser/tap"
 tap "hashicorp/tap"
-tap "homebrew/bundle"
-tap "jeffreywildman/virt-manager"
-tap "null-dev/firefox-profile-switcher"
-tap "permutive/tap", "git@github.com:permutive/homebrew-tap.git"
 tap "teamookla/speedtest"
 tap "zackelia/formulae"
 # General-purpose data compression with high compression ratio
