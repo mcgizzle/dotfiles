@@ -8,6 +8,9 @@ alias aliascfg='nvim ~/.aliases.sh'
 alias envcfg='nvim ~/.zshenv'
 alias reload='exec zsh && source ~/.zshenv'
 
+alias gp='gcloud config configurations activate personal'
+alias gw='gcloud config configurations activate work'
+
 ##################################################################
 # General                                                        #
 ##################################################################
@@ -41,6 +44,8 @@ ignore (){
 # Git                                                      #
 ##################################################################
 
+gr="gcm && gfo && groh"
+
 ## Taken from: https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/git/git.plugin.zsh
 
 # Check if main exists and use instead of master
@@ -65,6 +70,7 @@ function git_current_branch() {
 
 alias g='git'
 alias gc='git commit --verbose'
+alias ga='g add'
 alias ggpush='git push origin "$(git_current_branch)"'
 alias gfpush='ggpush -f'
 alias ggpull='git pull origin "$(git_current_branch)"'

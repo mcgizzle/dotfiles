@@ -153,3 +153,17 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 
 bindkey '^R' fzf-history-widget
 
+
+# proto
+export PROTO_HOME="$HOME/.proto";
+export PATH="$PROTO_HOME/shims:$PROTO_HOME/bin:$PATH";
+export PATH="$HOME/.local/bin:$PATH"
+
+# Added by Antigravity
+export PATH="/Users/mcgizzle/.antigravity/antigravity/bin:$PATH"
+
+# direnv hook
+eval "$(direnv hook zsh)"
+
+# OpenClaw Completion
+source "/Users/mcgizzle/.openclaw/completions/openclaw.zsh"

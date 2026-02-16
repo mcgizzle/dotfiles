@@ -12,4 +12,9 @@ export PATH=${PATH}:/opt/homebrew/bin
 export PATH=${PATH}:$HOME/binaries/globby-0.1.0-Darwin-arm64
 export PATH="$HOME/Library/Python/3.9/bin:$PATH"
 export PATH=$PATH:$(go env GOPATH)/bin
+export PATH="/opt/homebrew/opt/postgresql@17/bin:$PATH"
+
+# AWS Bedrock (used by Claude Code + OpenClaw)
+export AWS_PROFILE="bedrock-access-316332150940"
+export AWS_REGION="us-east-1"
 
