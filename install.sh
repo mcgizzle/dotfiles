@@ -3,8 +3,8 @@ set -e
 
 # Bootstrap script for a fresh macOS laptop.
 #
-# Upload as a secret gist, then on the new machine:
-#   curl -fsSL https://gist.githubusercontent.com/mcgizzle/<GIST_ID>/raw/install.sh | bash
+# On a fresh machine:
+#   curl -fsSL https://gist.githubusercontent.com/mcgizzle/04942da061d62a43b74ec489e2fcd1de/raw/install.sh | bash
 #
 # Prerequisites: 1Password installed with SSH agent enabled.
 
