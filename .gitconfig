@@ -1,0 +1,7 @@
+[user]
+	email = mcgroas@tcd.ie
+	name = mcgizzle
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+[core]
+	excludesfile = /Users/mcgizzle/.gitignore_global
