@@ -1,40 +1,38 @@
 ---
 name: laptop-setup
-description: Bootstrap a fresh macOS laptop. Sets up 1Password SSH, Xcode CLT, Homebrew, dotfiles, and runs the Ansible playbook. Use this skill when the user says they want to set up a new laptop, bootstrap their machine, or run the laptop setup.
+description: Bootstrap a fresh macOS laptop. Guides 1Password setup, configures SSH, clones dotfiles, installs Ansible, and runs the full laptop playbook. Use this skill when the user says they want to set up a new laptop, bootstrap their machine, or run the laptop setup.
 allowed-tools: Bash, AskUserQuestion
 ---
 
 # Fresh macOS Laptop Setup
 
-This skill automates the full setup of a new Mac. Run each step in order, confirming success before proceeding to the next.
+This skill orchestrates the full setup of a new Mac. The bootstrap script (install.sh) has already installed Homebrew, 1Password, and Claude Code. This skill handles everything from here.
 
-## Prerequisites
+Run each step in order. Confirm success before moving to the next. If a step fails, diagnose and fix before continuing.
 
-Before starting, confirm with the user:
-1. **1Password** is installed (from App Store) and they have signed in
-2. **SSH Agent** is enabled in 1Password (Settings > Developer > SSH Agent)
+## Step 1: 1Password Setup
 
-If not, tell them to do this first and come back.
+Ask the user to confirm they have done the following:
+1. Opened **1Password** and signed in to their account
+2. Enabled the **SSH Agent**: 1Password > Settings > Developer > SSH Agent
 
-## Step 1: Verify 1Password SSH Agent
+Then verify the agent socket exists:
 
 ```bash
 test -S "$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock" && echo "OK: 1Password SSH agent is running" || echo "FAIL: SSH agent socket not found"
 ```
 
-If this fails, stop and tell the user to enable the SSH agent in 1Password.
+If this fails, tell the user to check 1Password settings. Do not proceed until this passes.
 
-## Step 2: Configure SSH
-
-Create `~/.ssh/config` to use the 1Password agent (skip if it already exists):
+## Step 2: Configure SSH to use 1Password agent
 
 ```bash
 mkdir -p "$HOME/.ssh" && chmod 700 "$HOME/.ssh"
 if [ ! -f "$HOME/.ssh/config" ]; then
-  cat > "$HOME/.ssh/config" <<'EOF'
+  cat > "$HOME/.ssh/config" <<'SSHEOF'
 Host *
 	IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
-EOF
+SSHEOF
   chmod 644 "$HOME/.ssh/config"
   echo "Created ~/.ssh/config"
 else
@@ -42,39 +40,25 @@ else
 fi
 ```
 
-## Step 3: Xcode Command Line Tools
+## Step 3: Verify SSH access to GitHub
 
 ```bash
-if xcode-select -p &>/dev/null; then
-  echo "Xcode CLT already installed"
-else
-  xcode-select --install
-fi
+ssh -T git@github.com 2>&1 || true
 ```
 
-If `xcode-select --install` was triggered, **wait for the GUI installer to finish** before continuing. Ask the user to confirm when it's done.
+The user may see a 1Password prompt to authorize the SSH key. Tell them to approve it. Expected output contains "Hi mcgizzle!". If it says "Permission denied", the user needs to add their SSH key to their GitHub account via 1Password.
 
-## Step 4: Install Homebrew
-
-```bash
-if command -v brew &>/dev/null; then
-  echo "Homebrew already installed"
-else
-  NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-fi
-```
-
-## Step 5: Install Ansible
+## Step 4: Install Ansible
 
 ```bash
 eval "$(/opt/homebrew/bin/brew shellenv)"
 brew install ansible 2>/dev/null || true
 ```
 
-## Step 6: Clone the home-server repo
+## Step 5: Clone the home-server repo
 
 ```bash
+eval "$(/opt/homebrew/bin/brew shellenv)"
 mkdir -p "$HOME/code/personal"
 if [ ! -d "$HOME/code/personal/home-server" ]; then
   git clone git@github.com:mcgizzle/home-server.git "$HOME/code/personal/home-server"
@@ -83,17 +67,17 @@ else
 fi
 ```
 
-## Step 7: Run the Ansible playbook
+## Step 6: Run the Ansible playbook
 
-This is the main event. It handles everything else:
-- Clones dotfiles (bare repo to `~/.cfg`, checkout to `$HOME`)
+This is the main event. It handles:
+- Clones dotfiles bare repo to `~/.cfg` and checks out to `$HOME` (Brewfile, shell configs, Cursor settings, app preferences, etc.)
 - `brew bundle` from Brewfile (all packages, casks, VS Code extensions)
 - Zsh + Zim framework
 - Git config (user identity, SSH known_hosts)
-- macOS defaults (Dock, keyboard, Finder, dark mode, locale, screenshots, menu bar spacing)
-- App preferences (Stats, AltTab, Rectangle, Itsycal, HiddenBar)
+- macOS defaults (Dock right + autohide, fast key repeat, dark mode, en_GB locale, screenshots to ~/Documents/Screenshots, menu bar icon spacing)
+- App preferences (Stats, AltTab, Rectangle, Itsycal, HiddenBar imported via defaults)
 - Cursor editor settings (symlinked from dotfiles)
-- Dotfiles-sync LaunchAgent (weekly auto-backup)
+- Dotfiles-sync LaunchAgent (auto-backup every Monday 9am)
 
 ```bash
 eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -102,14 +86,15 @@ ansible-playbook "$HOME/code/personal/home-server/infra/ansible/laptop.yml"
 
 If ansible-playbook fails on a specific task, diagnose the error and retry. Common issues:
 - SSH key not authorized: user needs to approve the key in 1Password
-- brew bundle timeout: re-run, it will pick up where it left off
-- dotfiles checkout conflict: check `~/.config-backup` for backed-up files
+- brew bundle timeout: re-run, it picks up where it left off
+- dotfiles checkout conflict: backed-up files go to `~/.config-backup`
+- `community.general` collection missing: run `ansible-galaxy collection install community.general`
 
-## Step 8: Post-setup
+## Step 7: Post-setup
 
 Tell the user:
-1. Open a **new terminal** to pick up the shell config
-2. **Log out and back in** for macOS defaults to fully apply (especially menu bar spacing)
-3. Sign in to **JetBrains account** in IntelliJ to sync IDE settings
-4. The `FIGMA_API_KEY` environment variable needs to be set for the Claude Figma MCP server
-5. The dotfiles-sync LaunchAgent will run every Monday at 9am to keep Brewfile and app preferences up to date
+1. Open a **new terminal** to pick up the shell config (Zsh + Zim)
+2. **Log out and back in** for macOS defaults to fully apply (especially menu bar spacing and Dock position)
+3. Open **IntelliJ IDEA** and sign in to JetBrains account — Settings Sync will restore all IDE settings automatically
+4. Set the `FIGMA_API_KEY` environment variable for the Claude Figma MCP server (get the key from Figma > Settings > Personal Access Tokens)
+5. The dotfiles-sync LaunchAgent is now running — it auto-commits Brewfile and app preference changes every Monday at 9am

@@ -1,33 +1,14 @@
 #!/bin/bash
 set -e
 
-# Bootstrap script for a fresh macOS laptop.
+# Minimal bootstrap for a fresh macOS laptop.
+# Gets Claude Code running with the laptop-setup skill, then Claude handles everything else.
 #
 # On a fresh machine:
 #   curl -fsSL https://gist.githubusercontent.com/mcgizzle/04942da061d62a43b74ec489e2fcd1de/raw/install.sh | bash
-#
-# Prerequisites: 1Password installed with SSH agent enabled.
 
-OP_AGENT_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
-HOME_SERVER_REPO="git@github.com:mcgizzle/home-server.git"
-HOME_SERVER_PATH="$HOME/code/personal/home-server"
-
-echo "==> Checking 1Password SSH agent"
-if [ ! -S "$OP_AGENT_SOCK" ]; then
-  echo "ERROR: 1Password SSH agent socket not found."
-  echo "Open 1Password > Settings > Developer > Turn on SSH Agent, then retry."
-  exit 1
-fi
-
-echo "==> Configuring SSH to use 1Password agent"
-mkdir -p "$HOME/.ssh" && chmod 700 "$HOME/.ssh"
-if [ ! -f "$HOME/.ssh/config" ]; then
-  cat > "$HOME/.ssh/config" <<'EOF'
-Host *
-	IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
-EOF
-  chmod 644 "$HOME/.ssh/config"
-fi
+GIST_BASE="https://gist.githubusercontent.com/mcgizzle/04942da061d62a43b74ec489e2fcd1de/raw"
+SKILL_DIR="$HOME/.claude/skills/laptop-setup"
 
 echo "==> Installing Xcode Command Line Tools"
 if ! xcode-select -p &>/dev/null; then
@@ -39,20 +20,22 @@ fi
 echo "==> Installing Homebrew"
 if ! command -v brew &>/dev/null; then
   NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
-echo "==> Installing Ansible"
-brew install ansible 2>/dev/null || true
+echo "==> Installing 1Password and Claude Code"
+brew install --cask 1password 2>/dev/null || true
+brew install claude-code 2>/dev/null || true
 
-echo "==> Cloning home-server repo"
-mkdir -p "$(dirname "$HOME_SERVER_PATH")"
-if [ ! -d "$HOME_SERVER_PATH" ]; then
-  git clone "$HOME_SERVER_REPO" "$HOME_SERVER_PATH"
-fi
-
-echo "==> Handing off to Ansible"
-ansible-playbook "$HOME_SERVER_PATH/infra/ansible/laptop.yml"
+echo "==> Installing laptop-setup skill"
+mkdir -p "$SKILL_DIR"
+curl -fsSL "$GIST_BASE/SKILL.md" -o "$SKILL_DIR/SKILL.md"
 
 echo ""
-echo "Done! Open a new terminal to pick up your shell config."
+echo "========================================"
+echo "  Bootstrap complete!"
+echo ""
+echo "  1. Open 1Password and sign in"
+echo "  2. Open a new terminal and run: claude"
+echo "  3. Type: /laptop-setup"
+echo "========================================"
